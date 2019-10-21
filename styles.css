@@ -11,3 +11,7 @@ svg {
     margin: 2rem auto;
     text-align: center;
 }
+
+.bar {
+    background-color: aliceblue;
+}
