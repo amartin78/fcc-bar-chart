@@ -5,14 +5,21 @@ html, body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: wheat;
 }
 
 .center {
-    /* margin: 2rem auto; */
+    margin-bottom: 2rem;
     text-align: center;
+}
+
+svg {
+    background-color: white;
 }
 
 .bar {
 
 }
+
+
 
