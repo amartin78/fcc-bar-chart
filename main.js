@@ -1,5 +1,4 @@
 
-
 d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
 	.then(result => {
 		dataset = result['data'];
@@ -15,11 +14,9 @@ function chart(dataset) {
 		.attr('class', 'center')
 		.text('United States GDP');
 
-
-	const width = 949.4;
-	const height = 510;
+	const width = 1000;
+	const height = 511.46;
 	const padding = 100;
-
 
 	const xScale = d3.scaleTime()
 						.domain([new Date(1947,1,1), new Date(2015,7,1)])
@@ -32,9 +29,6 @@ function chart(dataset) {
 					.tickFormat(function(d) {
 						return d.getFullYear();
 					});
-					
-
-
 	const yAxis = d3.axisRight(yScale)
 					.tickSize(width - 2 * padding)
 					.tickFormat(function(d) {
@@ -66,6 +60,15 @@ function chart(dataset) {
 				})
 				.attr('dy', 3));
 
+
+	let tooltip = d3.select('body')
+		.append('div')
+		.attr('id', 'tooltip')
+		.style('position', 'absolute')
+		.style('z-index', '10')
+		.style('visibility', 'hidden')
+		.style('background-color', 'wheat')
+		.text('my tooltip')		
 	
 	svg.selectAll('rect')
 		.data(dataset)
@@ -75,15 +78,26 @@ function chart(dataset) {
 		.attr('fill', 'teal')
 		.attr('data-date', (d) => d[0])
 		.attr('data-gdp', (d) => d[1])
-		.attr('x', (d, i) => {
+		.attr('x', (d) => {
 			x = xScale(new Date(d[0].replace(/-/g,',')));
 			return x;
 		})
 		.attr('y', (d) => {
 			return height - padding - (d[1]/58);
 		})
-		.attr('width', 2.4)
-		.attr('height', (d) => d[1]/58);
+		.attr('width', 2.6)
+		.attr('height', (d) => {
+			return d[1]/58
+		})
+		.on('mouseover', (d) => {
+			tooltip.attr('data-date', d[0])
+			tooltip.text(d[0] + '\n' + d[1] + ' Billion');
+			return tooltip.style('visibility', 'visible');
+		})
+		.on('mouseout', (d) => {
+			return tooltip.style('visibility', 'hidden');
+		})
+
 
 }
 	
