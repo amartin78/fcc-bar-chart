@@ -9,11 +9,6 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
 function chart(dataset) {
 
-	// dataset = dataset.filter(d => {
-	// 	return (parseInt(d[0].substr(0,4)) % 5 === 0 && d[0][6] === '7');
-	// });
-	// console.log(dataset);
-
 	d3.select('body')
 		.append('h1')
 		.attr('id', 'title')
@@ -21,21 +16,22 @@ function chart(dataset) {
 		.text('United States GDP');
 
 
-	const width = 950;
-	const height = 500;
+	const width = 949.4;
+	const height = 510;
 	const padding = 100;
 
-	const xScale = d3.scaleLinear()
-						.domain([1945, d3.max(dataset, (d) => parseInt(d[0]) + 0.75)])
+
+	const xScale = d3.scaleTime()
+						.domain([new Date(1947,1,1), new Date(2015,7,1)])
 						.range([padding, width - padding]);
 	const yScale = d3.scaleLinear()
 						.domain([0, d3.max(dataset, (d) => d[1])])
 						.range([height - padding, padding]);
 
 	const xAxis = d3.axisBottom(xScale)
-					.tickValues([1950, 1955, 1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 
-								 2005, 2010, 2015])
-					.tickSize(10)
+					.tickFormat(function(d) {
+						return d.getFullYear();
+					});
 					
 
 
@@ -66,7 +62,7 @@ function chart(dataset) {
 				.attr('stroke-dasharray', '2'))
 		.call(g => g.selectAll('.tick text')
 				.attr('x', (d) => {
-					return d > 9000 ? -40 : d > 0 ? -35 : -18;
+					return d > 9000 ? -35 : d > 0 ? -30 : -13;
 				})
 				.attr('dy', 3));
 
@@ -79,7 +75,10 @@ function chart(dataset) {
 		.attr('fill', 'teal')
 		.attr('data-date', (d) => d[0])
 		.attr('data-gdp', (d) => d[1])
-		.attr('x', (d, i) => i * 2.73 + padding)
+		.attr('x', (d, i) => {
+			x = xScale(new Date(d[0].replace(/-/g,',')));
+			return x;
+		})
 		.attr('y', (d) => {
 			return height - padding - (d[1]/58);
 		})

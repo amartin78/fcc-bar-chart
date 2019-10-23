@@ -6,6 +6,7 @@ html, body {
     align-items: center;
     flex-direction: column;
     background-color: wheat;
+    color: #333;
 }
 
 .center {
