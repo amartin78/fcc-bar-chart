@@ -18,9 +18,14 @@ svg {
     background-color: white;
 }
 
+.bar {
+    position: relative;
+}
+
 .bar:hover {
     fill: lightGrey;
 }
+
 
 
 

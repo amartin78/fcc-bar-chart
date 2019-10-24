@@ -60,6 +60,11 @@ function chart(dataset) {
 				})
 				.attr('dy', 3));
 
+	svg.append('text')
+	   .attr('transform', 'rotate(-90)')
+	   .attr('x', -325)
+	   .attr('y', 40)
+	   .text('Gross Domestic Product');
 
 	let tooltip = d3.select('body')
 		.append('div')
@@ -68,35 +73,56 @@ function chart(dataset) {
 		.style('z-index', '10')
 		.style('visibility', 'hidden')
 		.style('background-color', 'wheat')
-		.text('my tooltip')		
+		.style('padding', '0.8rem')
 	
 	svg.selectAll('rect')
 		.data(dataset)
 		.enter()
 		.append('rect')
-		.attr('class', 'bar')
-		.attr('fill', 'teal')
-		.attr('data-date', (d) => d[0])
-		.attr('data-gdp', (d) => d[1])
-		.attr('x', (d) => {
-			x = xScale(new Date(d[0].replace(/-/g,',')));
-			return x;
-		})
-		.attr('y', (d) => {
-			return height - padding - (d[1]/58);
-		})
-		.attr('width', 2.6)
-		.attr('height', (d) => {
-			return d[1]/58
-		})
-		.on('mouseover', (d) => {
-			tooltip.attr('data-date', d[0])
-			tooltip.text(d[0] + '\n' + d[1] + ' Billion');
-			return tooltip.style('visibility', 'visible');
-		})
-		.on('mouseout', (d) => {
-			return tooltip.style('visibility', 'hidden');
-		})
+			.attr('class', 'bar')
+			.attr('fill', 'teal')
+			.style('position', 'relative')
+			.attr('data-date', (d) => d[0])
+			.attr('data-gdp', (d) => d[1])
+			.attr('x', (d) => {
+				x = xScale(new Date(d[0].replace(/-/g,',')));
+				return x;
+			})
+			.attr('y', (d) => {
+				return height - padding - (d[1]/58);
+			})
+			.attr('width', 2.6)
+			.attr('height', (d) => {
+				return d[1]/58
+			})
+			.on('mouseover', (d) => {
+				tooltip.attr('data-date', d[0])
+				tooltip.style('visibility', 'visible')
+
+				let quarter = d[0].substr(5,2);
+				switch(quarter) {
+					case '04':
+						quarter = '2';
+						break;
+					case '07':
+						quarter =  '3';
+						break;
+					case '10':
+						quarter = '4';
+						break;
+					default:
+						quarter = '1';
+				}
+				let amount = new Intl.NumberFormat("en-US", {style:'currency', currency:'USD', 
+													minimumFractionDigits: 1});
+				
+				tooltip.html( d[0].substr(0,4) + ' Q' + quarter + '<br>' + amount.format(d[1]) + ' Billion' )
+						.style('right', width - xScale(new Date(d[0].replace(/-/g,','))) - 25)
+						.style('top', 460)
+			})
+			.on('mouseout', (d) => {
+				tooltip.style('visibility', 'hidden');
+			})
 
 
 }
