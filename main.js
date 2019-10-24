@@ -4,6 +4,12 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 		chart(dataset);
 	});
 
+function date(d) {
+	let t = d.split('-');
+
+	return new Date(t[0], t[1], t[2]);
+}
+
 
 function chart(dataset) {
 
@@ -18,7 +24,8 @@ function chart(dataset) {
 	const padding = 100;
 
 	const xScale = d3.scaleTime()
-						.domain([new Date(1947,1,1), new Date(2015,7,1)])
+						.domain([ d3.min(dataset, (d) => date(d[0])),
+								  d3.max(dataset, (d) => date(d[0])) ])
 						.range([padding, width - padding]);
 	const yScale = d3.scaleLinear()
 						.domain([0, d3.max(dataset, (d) => d[1])])
@@ -88,11 +95,11 @@ function chart(dataset) {
 				return x;
 			})
 			.attr('y', (d) => {
-				return height - padding - (d[1]/58);
+				return yScale(d[1]);
 			})
 			.attr('width', 2.6)
 			.attr('height', (d) => {
-				return d[1]/58
+				return height - padding - yScale(d[1]);
 			})
 			.on('mouseover', (d) => {
 				tooltip.attr('data-date', d[0])
