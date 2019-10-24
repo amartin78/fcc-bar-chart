@@ -9,13 +9,13 @@ html, body {
     color: #333;
 }
 
+svg {
+    background-color: white;
+}
+
 .center {
     margin-bottom: 2rem;
     text-align: center;
-}
-
-svg {
-    background-color: white;
 }
 
 .bar {

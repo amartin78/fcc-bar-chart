@@ -1,4 +1,3 @@
-
 d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
 	.then(result => {
 		dataset = result['data'];
@@ -122,9 +121,9 @@ function chart(dataset) {
 			})
 			.on('mouseout', (d) => {
 				tooltip.style('visibility', 'hidden');
-			})
-
+			});
 
 }
+
 	
 
