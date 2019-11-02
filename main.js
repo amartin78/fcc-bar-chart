@@ -7,6 +7,8 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 function date(d) {
 	let t = d.split('-');
 
+	console.log(new Date(t[0], t[1], t[2] + 0.2))
+
 	return new Date(t[0], t[1], t[2]);
 }
 
@@ -25,7 +27,7 @@ function chart(dataset) {
 
 	const xScale = d3.scaleTime()
 						.domain([ d3.min(dataset, (d) => date(d[0])),
-								  d3.max(dataset, (d) => date(d[0])) ])
+								  d3.max(dataset, (d) => date(d[0]+9)) ])
 						.range([padding, width - padding]);
 	const yScale = d3.scaleLinear()
 						.domain([0, d3.max(dataset, (d) => d[1])])
@@ -97,7 +99,7 @@ function chart(dataset) {
 			.attr('y', (d) => {
 				return yScale(d[1]);
 			})
-			.attr('width', 3.8)
+			.attr('width', 3.3)
 			.attr('height', (d) => {
 				return height - padding - yScale(d[1]);
 			})
