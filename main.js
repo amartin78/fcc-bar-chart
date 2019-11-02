@@ -29,7 +29,7 @@ function chart(dataset) {
 						.range([padding, width - padding]);
 	const yScale = d3.scaleLinear()
 						.domain([0, d3.max(dataset, (d) => d[1])])
-						.range([height - padding, padding]);
+						.range([height - padding, padding])
 
 	const xAxis = d3.axisBottom(xScale)
 					.tickFormat(function(d) {
@@ -86,7 +86,7 @@ function chart(dataset) {
 		.enter()
 		.append('rect')
 			.attr('class', 'bar')
-			.attr('fill', 'teal')
+			.attr('fill', 'darkseagreen')
 			.style('position', 'relative')
 			.attr('data-date', (d) => d[0])
 			.attr('data-gdp', (d) => d[1])
@@ -97,7 +97,7 @@ function chart(dataset) {
 			.attr('y', (d) => {
 				return yScale(d[1]);
 			})
-			.attr('width', 2.6)
+			.attr('width', 3.8)
 			.attr('height', (d) => {
 				return height - padding - yScale(d[1]);
 			})
