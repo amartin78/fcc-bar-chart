@@ -7,8 +7,6 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 function date(d) {
 	let t = d.split('-');
 
-	console.log(new Date(t[0], t[1], t[2] + 0.2))
-
 	return new Date(t[0], t[1], t[2]);
 }
 
