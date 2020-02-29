@@ -123,8 +123,8 @@ function chart(dataset) {
 													minimumFractionDigits: 1});
 				
 				tooltip.html( d[0].substr(0,4) + ' Q' + quarter + '<br>' + amount.format(d[1]) + ' Billion' )
-						.style('right', width - xScale(new Date(d[0].replace(/-/g,','))) - 25)
-						.style('top', 460)
+						.style('right', (width - xScale(new Date(d[0].replace(/-/g,','))) - 25) + 'px')
+						.style('top', '460px')
 			})
 			.on('mouseout', (d) => {
 				tooltip.style('visibility', 'hidden');
